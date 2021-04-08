@@ -29,10 +29,10 @@ EM_JS(int, canvas_get_height, (), {
 });
 
 EM_JS(void, resizeCanvas, (), {
-  resizeCanvas();
+  js_resizeCanvas();
 });
 
-void draw()
+void loop()
 {
   int width = canvas_get_width();
   int height = canvas_get_height();
@@ -98,37 +98,6 @@ void draw()
 }
 
 
-void input()
-{
-}
-
-
-void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
-{
-  ImGui::SetCurrentContext(imgui);
-  ImGuiIO& io = ImGui::GetIO();
-  io.MousePos = ImVec2((float)xpos*1.f, (float)ypos*1.f);
-}
-
-
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
-{
-}
-
-
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
-{
-
-}
-
-
-void loop()
-{
-  input();
-  draw();
-}
-
-
 int init()
 {
   if( !glfwInit() )
@@ -157,8 +126,6 @@ int init()
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
   ImGuiIO& io = ImGui::GetIO();
-  //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
-  //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;   // Enable Gamepad Controls
 
   ImGui_ImplGlfw_InitForOpenGL(g_window, false);
   ImGui_ImplOpenGL3_Init();
@@ -177,7 +144,6 @@ int init()
   imgui =  ImGui::GetCurrentContext();
 
   // Cursor callbacks
-  // glfwSetCursorPosCallback(g_window, cursor_pos_callback);
   glfwSetMouseButtonCallback(g_window, ImGui_ImplGlfw_MouseButtonCallback);
   glfwSetScrollCallback(g_window, ImGui_ImplGlfw_ScrollCallback);
   glfwSetKeyCallback(g_window, ImGui_ImplGlfw_KeyCallback);
